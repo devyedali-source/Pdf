@@ -1,0 +1,44 @@
+# codemagic.yaml - CI/CD pipeline configuration for building the Android APK
+workflows:
+  android-build:
+    name: Android APK Auto Builder
+    max_build_duration: 30
+    instance_type: mac_mini_m1
+    environment:
+      vars:
+        PACKAGE_NAME: "com.aistudio.pdfsigner.rztwks"
+      java: 17
+      android_ndk: 25.2.9519653
+    triggering:
+      events:
+        - push
+        - tag
+        - pull_request
+      branch_patterns:
+        - pattern: 'main'
+          include: true
+        - pattern: 'master'
+          include: true
+    scripts:
+      - name: Grant execute permission to Gradle
+        script: |
+          chmod +x gradlew || true
+      - name: Clean project
+        script: |
+          gradle clean
+      - name: Build Android debug APK
+        script: |
+          gradle assembleDebug
+      - name: Build Android production bundle (AAB)
+        script: |
+          gradle bundleRelease
+    artifacts:
+      - app/build/outputs/apk/**/*.apk
+      - app/build/outputs/bundle/**/*.aab
+    publishing:
+      email:
+        recipients:
+          - devyedali@gmail.com
+        notify:
+          success: true
+          failure: true
