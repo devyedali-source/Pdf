@@ -1,0 +1,6 @@
+{
+  "name": "توقيع PDF",
+  "description": "تطبيق لتعديل ملفات PDF وإدراج التوقيع والختم أسفل كلمة المعلم مع حفظ التعديلات بدقة عالية مباشرة على الجهاز.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
